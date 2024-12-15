@@ -7,14 +7,18 @@ const createStudent = async (req: Request, res: Response) => {
 
   try {
     const result = await studentService.createStudentIntoDB(student);
-    console.log(result);
+  
     res.status(200).json({
       success: true,
       message: 'Student created successfully',
       data: result,
     });
   } catch (err) {
-    console.log(err);
+      res.status(500).json({
+        success: false ,
+        message: 'Error creating student',
+        data: err
+      });
   }
 };
 
@@ -27,7 +31,11 @@ const getAllStudents = async (req: Request, res: Response) => {
       data: students,
     });
   } catch (err) {
-    console.log(err);
+     res.status(500).json({
+      success: false,
+      message: 'Error fetching students',
+      data: err,
+     });
   }
 };
 
