@@ -15,7 +15,10 @@ const GuardianSchema = new Schema<Guardian>({
 
 const studentSchema = new Schema<Student>({
   id: { type: String, required: true, unique: true },
-  name: UserNameSchema,
+  name: {
+       type: UserNameSchema,
+        required: true,  
+  },
   gender: {
     type: String,
     enum: ['male', 'female'],
@@ -33,7 +36,10 @@ const studentSchema = new Schema<Student>({
     permanent: { type: String, required: true },
     current: { type: String, required: true },
   },
-  guardian: GuardianSchema,
+  guardian:{
+    type: GuardianSchema,
+    required: true,
+  },
   profileImage: { type: String },
   isActive: {
     type: String,
