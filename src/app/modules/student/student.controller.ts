@@ -18,18 +18,18 @@ const createStudent = async (req: Request, res: Response) => {
 
   try {
     const validate = StudentValidationSchema.parse(student);
-    console.log(validate);
-    const result = await studentService.createStudentIntoDB(student);
+    // console.log(validate);
+    const result = await studentService.createStudentIntoDB(validate);
   
     res.status(200).json({
       success: true,
       message: 'Student created successfully',
       data: result,
     });
-  } catch (err) {
+  } catch (err : any) {
       res.status(500).json({
         success: false ,
-        message: 'Error creating student',
+        message: err.message || 'Error creating student',
         data: err
       });
   }

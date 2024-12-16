@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import { Guardian, Student, UserName } from './student.interface';
+import { Guardian, Student, StudentMethods, StudentModelStatic, UserName } from './student.interface';
 
 const UserNameSchema = new Schema<UserName>({
   firstName: { 
@@ -43,7 +43,7 @@ const GuardianSchema = new Schema<Guardian>({
   },
 });
 
-const studentSchema = new Schema<Student>({
+const studentSchema = new Schema<Student, StudentModelStatic , StudentMethods>({
   id: { 
     type: String, 
     required: [true, "Student ID is required"], 
@@ -102,4 +102,9 @@ const studentSchema = new Schema<Student>({
   },
 });
 
-export const StudentModel = model<Student>('Student', studentSchema);
+studentSchema.methods.isUserExist = async function (id: string){
+  const existingUser= await StudentModel.findOne({id});
+    return existingUser;
+}
+
+export const StudentModel = model<Student , StudentModelStatic>('Student', studentSchema);
