@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import { Guardian, Student, StudentMethods, StudentModelStatic, UserName } from './student.interface';
+import { Guardian, Student,  StudentModelStaticMethod,  UserName } from './student.interface';
 
 const UserNameSchema = new Schema<UserName>({
   firstName: { 
@@ -43,7 +43,7 @@ const GuardianSchema = new Schema<Guardian>({
   },
 });
 
-const studentSchema = new Schema<Student, StudentModelStatic , StudentMethods>({
+const studentSchema = new Schema<Student , StudentModelStaticMethod>({
   id: { 
     type: String, 
     required: [true, "Student ID is required"], 
@@ -102,9 +102,17 @@ const studentSchema = new Schema<Student, StudentModelStatic , StudentMethods>({
   },
 });
 
-studentSchema.methods.isUserExist = async function (id: string){
-  const existingUser= await StudentModel.findOne({id});
+// creating a custom  instance method
+// studentSchema.methods.isUserExist = async function (id: string){
+//   const existingUser= await StudentModel.findOne({id});
+//     return existingUser;
+// }
+
+// static method 
+
+studentSchema.statics.isUserExist = async function (id: string){
+  const existingUser= await this.findOne({id});
     return existingUser;
 }
 
-export const StudentModel = model<Student , StudentModelStatic>('Student', studentSchema);
+export const StudentModel = model<Student , StudentModelStaticMethod>('Student', studentSchema);

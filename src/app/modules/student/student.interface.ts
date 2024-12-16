@@ -1,3 +1,5 @@
+// import { Model } from "mongoose";
+
 import { Model } from "mongoose";
 
 export type Guardian = {
@@ -29,10 +31,19 @@ export type Student = {
   profileImage?: string;
   isActive: 'active' | 'inactive';
 };
+// for creating instance method
+// export interface StudentMethods {
 
-export type StudentMethods = {
+//   isUserExist(id: string) : Promise<Student | null>;
+// }
 
-  isUserExist(id: string) : Promise<Student | null>;
-}
+// export type  StudentModelStatic = Model<Student, Record< string , never> , StudentMethods > 
+ 
 
-export type  StudentModelStatic = Model<Student, Record< string , never> , StudentMethods > 
+// this of static method 
+
+export interface StudentModelStaticMethod extends Model<Student> {
+
+           isUserExist(id: string) : Promise<Student | null>; 
+ }
+
