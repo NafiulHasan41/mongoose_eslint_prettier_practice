@@ -127,8 +127,11 @@ const studentSchema = new Schema<Student , StudentModelStaticMethod>({
  })
 
  // post hook middleware
- studentSchema.post('save', function() {
-    console.log(this," post hook : data has been saved");
+ studentSchema.post('save', function(doc,next) {
+    // we will remove the password 
+    doc.password = '********';
+    // console.log(this," post hook : data has been saved");
+    next();
  })
 
 
