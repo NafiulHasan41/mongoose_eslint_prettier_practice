@@ -7,7 +7,17 @@ const UserNameSchema = new Schema<UserName>({
     trim: true,
     minlength: [3, "First name can not be less than 3 characters"],
     maxlength: [10, "First name can not be more than 10 characters"],
-    required: [true, "First name is required"], 
+    required: [true, "First name is required"],
+    // always will use normal function as arrow function does not work this.
+
+    validate:{ 
+     validator:function (value: string){
+        return /^[A-Z][a-z]+$/.test(value);
+
+    },
+    message: "First name should start with capital letter and only contain alphabets"
+
+  }
   },
   middleName: { 
     type: String 
