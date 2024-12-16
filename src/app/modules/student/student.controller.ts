@@ -1,9 +1,19 @@
 import { Request, Response } from 'express';
 import { studentService } from './student.service';
+import StudentSchema from './student.validation';
 
 const createStudent = async (req: Request, res: Response) => {
   const student = req.body;
+
+   const { error , value } = StudentSchema.validate(student);
   // will call service method to create student
+  if (error) {
+    return res.status(400).json({
+      success: false,
+      message: error,
+      value: value,
+    });
+  }
 
   try {
     const result = await studentService.createStudentIntoDB(student);
