@@ -1,5 +1,7 @@
 import { model, Schema } from 'mongoose';
 import { Guardian, Student,  StudentModelStaticMethod,  UserName } from './student.interface';
+import bcrypt from 'bcrypt';
+import config from '../../config';
 
 const UserNameSchema = new Schema<UserName>({
   firstName: { 
@@ -48,6 +50,13 @@ const studentSchema = new Schema<Student , StudentModelStaticMethod>({
     type: String, 
     required: [true, "Student ID is required"], 
     unique: true 
+  },
+  password: { 
+    type: String, 
+    required: [true, "Password is required"],
+    maxlength: [24, "Password can not be more than 24 characters"], 
+    minlength: [8, "Password can not be less than 8 characters"],
+
   },
   name: {
     type: UserNameSchema,
@@ -101,6 +110,29 @@ const studentSchema = new Schema<Student , StudentModelStaticMethod>({
     default: 'active',
   },
 });
+
+ // for middleware // hook 
+
+ //pre hook middleware 
+ studentSchema.pre('save', async function(next) {
+
+    // console.log(this," pre hook : we will save the data");
+   const user = this as Student;
+
+   const pass = await bcrypt.hash(user.password, Number(config.bcryptSalt));
+    user.password = pass;
+
+    next();
+    
+ })
+
+ // post hook middleware
+ studentSchema.post('save', function() {
+    console.log(this," post hook : data has been saved");
+ })
+
+
+
 
 // creating a custom  instance method
 // studentSchema.methods.isUserExist = async function (id: string){

@@ -30,6 +30,10 @@ const AddressSchema = z.object({
 const StudentSchema = z.object({
   id: z.string({ required_error: "Student ID is required" }),
   name: UserNameSchema, // Nested UserNameSchema
+  password: z
+    .string({ required_error: "Password is required" })
+    .min(8, { message: "Password can not be less than 8 characters" })
+    .max(24, { message: "Password can not be more than 24 characters" }),
   gender: z.enum(["male", "female"], { required_error: "Gender is required" }),
   dataOfBirth: z.string({ required_error: "Date of birth is required" }),
   email: z.string({ required_error: "Email address is required" }).email("Invalid email format"),

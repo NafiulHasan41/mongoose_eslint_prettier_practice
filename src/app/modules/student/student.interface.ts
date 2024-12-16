@@ -17,6 +17,7 @@ export type UserName = {
 export type Student = {
   id: string;
   name: UserName;
+  password: string;
   gender: 'male' | 'female';
   dataOfBirth: string;
   email: string;
@@ -44,6 +45,13 @@ export type Student = {
 
 export interface StudentModelStaticMethod extends Model<Student> {
 
+           // eslint-disable-next-line no-unused-vars
            isUserExist(id: string) : Promise<Student | null>; 
  }
+
+
+
+
+ 
+
 
