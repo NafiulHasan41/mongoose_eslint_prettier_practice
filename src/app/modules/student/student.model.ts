@@ -135,6 +135,14 @@ const studentSchema = new Schema<Student , StudentModelStaticMethod>({
  })
 
 
+ // query middleware 
+    studentSchema.pre('find', function(next) {
+
+        console.log(this," pre hook : we will find the data");
+        next();
+    })
+
+
 
 
 // creating a custom  instance method

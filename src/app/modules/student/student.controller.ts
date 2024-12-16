@@ -63,7 +63,11 @@ const getSingleStudent = async (req: Request, res: Response) => {
       data: student,
     });
   } catch (err) {
-    console.log(err);
+    res.status(500).json({
+      success: false ,
+      message: 'Error fetching students',
+      data: err
+    });
   }
 };
 
