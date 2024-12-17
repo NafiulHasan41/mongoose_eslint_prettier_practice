@@ -27,6 +27,7 @@ const createStudent = async (req: Request, res: Response) => {
       data: result,
     });
   
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err : any) {
       res.status(500).json({
         success: false ,
